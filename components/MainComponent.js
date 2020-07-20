@@ -5,6 +5,7 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Dishdetail from './DishDetailComponent';
+import Reservation from './ReservationComponent';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView }  from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -109,6 +110,25 @@ const AboutNavigator = createStackNavigator({
     })
 })
 
+const ReservationNavigator = createStackNavigator({
+    Reservation: { screen: Reservation }
+},
+{
+    navigationOptions: ({navigation}) => ({
+        headerStyle: {
+            backgroundColor: '#512DA8'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: '#fff'
+        },
+        headerLeft: <Icon name='menu' size = {24}
+                color="white"
+                onPress={()=>navigation.toggleDrawer()}
+            />
+    })
+})
+
 const CustomDrawerContentComponent = (props) => (
     <ScrollView>
         <SafeAreaView style={StyleSheet.container}
@@ -178,16 +198,17 @@ const MainNavigator = createDrawerNavigator({
         }
     },
 
-    Contact: {
-        screen: ContactNavigator,
+    
+    Reservation: {
+        screen: ReservationNavigator,
         navigationOptions: {
-            title: 'Contact Us',
-            drawerLabel: 'Contact Us',
+            title: 'Reserve Table',
+            drawerLabel: 'Reserve Table',
             drawerIcon: ({ tintColor }) => (
                 <Icon 
-                    name='address-card'
+                    name='cutlery'
                     type='font-awesome'
-                    size={22}
+                    size={24}
                     color={tintColor}
                 />
             )

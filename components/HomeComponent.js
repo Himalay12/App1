@@ -20,20 +20,30 @@ const mapStateToProps = state => {
 function RenderItems(props){
     const item = props.item;
 
-    if(item != null){
+    if(props.isLoading) {
         return (
-            <Card
-                featuredTitle={item.name}
-                featuredSubtitle={item.designation}
-                image={{uri: baseUrl+item.image}}
-            >
-                <Text style={{margin: 10}}>
-                    {item.description}
-                </Text>
-            </Card>
-        )
-    }else {
-        return <View></View>
+            <Loading />
+        );
+    }
+    else if(props.errMess) {
+        return <Text>{props.errMess}</Text>
+    }
+    else {
+        if(item != null){
+            return (
+                <Card
+                    featuredTitle={item.name}
+                    featuredSubtitle={item.designation}
+                    image={{uri: baseUrl+item.image}}
+                >
+                    <Text style={{margin: 10}}>
+                        {item.description}
+                    </Text>
+                </Card>
+            )
+        }else {
+            return <View></View>
+        }
     }
 }
 
@@ -49,12 +59,18 @@ class Home extends Component{
             <ScrollView>
                 <RenderItems 
                     item={this.props.dishes.dishes.filter((dish)=>dish.featured)[0]}
+                    isLoading={this.props.dishes.isLoading}
+                    errMess={this.props.dishes.errMess}
                 />
                 <RenderItems 
                     item={this.props.promotions.promotions.filter((promotion)=>promotion.featured)[0]}
+                    isLoading={this.props.promotions.isLoading}
+                    errMess={this.props.promotions.errMess}
                 />
                 <RenderItems 
                     item={this.props.leaders.leaders.filter((leader)=>leader.featured)[0]}
+                    isLoading={this.props.leaders.isLoading}
+                    errMess={this.props.leaders.errMess}
                 />
             </ScrollView>
         )
